@@ -4,7 +4,8 @@ var module;
 module = angular.module('angularBootstrapNavTree', []);
 
 module.directive('abnTree', [
-  '$timeout', function($timeout) {
+  '$timeout',
+  function($timeout) {
     return {
       restrict: 'E',
       template: "{html}",
@@ -297,6 +298,16 @@ module.directive('abnTree', [
               }
               return new_branch;
             };
+            tree.remove_branch = function(b) {
+              if (b) {
+                var parent = tree.get_parent_branch(b);
+                if (parent) {
+                  var children = parent.children;
+                  children.splice(children.indexOf(b), 1);
+                  return b;
+                }
+              }
+            }
             tree.add_root_branch = function(new_branch) {
               tree.add_branch(null, new_branch);
               return new_branch;
